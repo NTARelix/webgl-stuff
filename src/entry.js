@@ -26,15 +26,13 @@ function setTriangle(gl, size) {
   );
 }
 
-function rand(max) {
-  return Math.random() * max;
-}
-
-/**
- * Draws scene to gl context
- * @param {WebGLRenderingContext} gl
- */
-function drawScene(gl) {
+function main() {
+  /** @type {HTMLCanvasElement} */
+  const canvasNode = document.querySelector(`.gameCanvas`);
+  const gl = canvasNode.getContext(`webgl`);
+  if (!gl) {
+    throw new Error(`Failed to retrieve WebGL rendering context`);
+  }
   //shader program
   const vertexShader = createShader(gl, gl.VERTEX_SHADER, vs2d);
   const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsVariable);
@@ -57,8 +55,8 @@ function drawScene(gl) {
   const triangleSize = 25;
   for (let i = 0; i < 100; i++) {
     setTriangle(gl, triangleSize);
-    gl.uniform4f(colorUni, rand(1), rand(1), rand(1), 1);
-    gl.uniform2f(translationUni, rand(gl.canvas.width - triangleSize), rand(gl.canvas.height - triangleSize))
+    gl.uniform4f(colorUni, Math.random(), Math.random(), Math.random(), 1);
+    gl.uniform2f(translationUni, Math.random() * (gl.canvas.width - triangleSize), Math.random() * (gl.canvas.height - triangleSize))
     const angleDeg = Math.random() * 360;
     const angleRad = angleDeg * Math.PI / 180;
     const rotX = Math.cos(angleRad);
@@ -69,15 +67,6 @@ function drawScene(gl) {
     gl.uniform2f(scaleUni, scaleX, scaleY);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
-}
-
-function main() {
-  const canvasNode = document.querySelector(`.gameCanvas`);
-  const gl = canvasNode.getContext(`webgl`);
-  if (!gl) {
-    throw new Error(`Failed to retrieve WebGL rendering context`);
-  }
-  drawScene(gl);
 }
 
 main();
