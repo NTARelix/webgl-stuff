@@ -56,7 +56,11 @@ function main() {
   for (let i = 0; i < 100; i++) {
     setTriangle(gl, triangleSize);
     gl.uniform4f(colorUni, Math.random(), Math.random(), Math.random(), 1);
-    gl.uniform2f(translationUni, Math.random() * (gl.canvas.width - triangleSize), Math.random() * (gl.canvas.height - triangleSize))
+    gl.uniform2f(
+      translationUni,
+      Math.random() * (gl.canvas.width - triangleSize),
+      Math.random() * (gl.canvas.height - triangleSize)
+    );
     const angleDeg = Math.random() * 360;
     const angleRad = angleDeg * Math.PI / 180;
     const rotX = Math.cos(angleRad);
