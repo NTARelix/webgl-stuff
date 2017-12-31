@@ -37,6 +37,7 @@ function main() {
   const vertexShader = createShader(gl, gl.VERTEX_SHADER, vs2d);
   const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsVariable);
   const program = createProgram(gl, vertexShader, fragmentShader);
+  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
   gl.useProgram(program);
   const positionAttr = gl.getAttribLocation(program, `a_position`);
   const colorUni = gl.getUniformLocation(program, `u_color`);
