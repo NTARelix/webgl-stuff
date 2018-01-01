@@ -13,7 +13,7 @@ export function multiply(a, b) {
   const a20 = a[2 * 3 + 0];
   const a21 = a[2 * 3 + 1];
   const a22 = a[2 * 3 + 2];
-  const b00 = a[0 * 3 + 0];
+  const b00 = b[0 * 3 + 0];
   const b01 = b[0 * 3 + 1];
   const b02 = b[0 * 3 + 2];
   const b10 = b[1 * 3 + 0];
@@ -41,11 +41,7 @@ export function multiply(a, b) {
  * @returns {number<Array>} GL 2d translation matrix
  */
 export function translation(tx, ty) {
-  return [
-     1,  0, 0,
-     0,  1, 0,
-    tx, ty, 1
-  ];
+  return [1, 0, 0, 0, 1, 0, tx, ty, 1];
 }
 
 /**
@@ -55,11 +51,7 @@ export function translation(tx, ty) {
 export function rotation(angleRadians) {
   const c = Math.cos(angleRadians);
   const s = Math.sin(angleRadians);
-  return [
-    c, -s, 0,
-    s,  c, 0,
-    0,  0, 1
-  ];
+  return [c, -s, 0, s, c, 0, 0, 0, 1];
 }
 
 /**
@@ -68,11 +60,7 @@ export function rotation(angleRadians) {
  * @returns {number<Array>} GL 2d scaling matrix
  */
 export function scaling(sx, sy) {
-  return [
-    sx, 0, 0,
-     0, sy, 0,
-     0, 0, 1
-  ];
+  return [sx, 0, 0, 0, sy, 0, 0, 0, 1];
 }
 
 /**
@@ -81,9 +69,5 @@ export function scaling(sx, sy) {
  * @returns {number<Array>} GL 2d projection matrix
  */
 export function projection(width, height) {
-  return [
-    2 / width, 0, 0,
-    0, -2 / height, 0,
-    -1, 1, 1
-  ];
+  return [2 / width, 0, 0, 0, -2 / height, 0, -1, 1, 1];
 }
