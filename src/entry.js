@@ -5,6 +5,33 @@ import fsVariable from './shaders/fs-variable';
 import * as m3 from './core/m3';
 
 /**
+ * Creates a rectangle
+ * @param {WebGLRenderingContext} gl
+ * @param {number} width
+ * @param {number} height
+ */
+function setRectangle(gl, width, height) {
+  gl.bufferData(
+    gl.ARRAY_BUFFER,
+    new Float32Array([
+      //top left
+      0,
+      0,
+      //top right
+      width,
+      0,
+      //bottom right
+      width,
+      height,
+      //bottom left
+      0,
+      height
+    ]),
+    gl.STATIC_DRAW
+  );
+}
+
+/**
  * Creates a right triangle
  * @param {WebGLRenderingContext} gl
  * @param {number} size
@@ -51,10 +78,11 @@ function main() {
   gl.clearColor(0, 0, 0, 1); //reset to black
   gl.clear(gl.COLOR_BUFFER_BIT);
   for (let i = 0; i < 100; i++) {
-    setTriangle(gl, 25);
+    // setTriangle(gl, 25);
+    setRectangle(gl, 20, 50);
     gl.uniform4f(colorUni, Math.random(), Math.random(), Math.random(), 1);
-    const translateX = Math.random() * (gl.canvas.width - 25);
-    const translateY = Math.random() * (gl.canvas.height - 25);
+    const translateX = Math.random() * (gl.canvas.width - 20);
+    const translateY = Math.random() * (gl.canvas.height - 50);
     const angleInRadians = Math.random() * 2 * Math.PI;
     const scaleX = Math.random() * 1.5 + 0.5;
     const scaleY = Math.random() * 1.5 + 0.5;
@@ -62,14 +90,10 @@ function main() {
     const translationMatrix = m3.translation(translateX, translateY);
     const rotationMatrix = m3.rotation(angleInRadians);
     const scalingMatrix = m3.scaling(scaleX, scaleY);
-    const tranformationMatrix = [
-      projectionMatrix,
-      translationMatrix,
-      rotationMatrix,
-      scalingMatrix
-    ].reduce(m3.multiply);
+    const tranformationMatrix = [projectionMatrix, translationMatrix, rotationMatrix, scalingMatrix].reduce(m3.multiply);
     gl.uniformMatrix3fv(transformUni, false, tranformationMatrix);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    // gl.drawArrays(gl.TRIANGLES, 0, 3);
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
   }
 }
 
