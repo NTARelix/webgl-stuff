@@ -24,17 +24,19 @@ async function main() {
   const renderer = new Renderer(canvasNode);
   const firefoxSprite = new Container();
   firefoxSprite.image = image;
-  let firefoxXVelocity = 2;
-  let firefoxYVelocity = 2;
+  const firefoxVelocity = 10;
+  const initialFirefoxDirection = Math.random() * 2 * Math.PI;
+  let firefoxXDelta = Math.cos(initialFirefoxDirection) * firefoxVelocity;
+  let firefoxYDelta = Math.sin(initialFirefoxDirection) * firefoxVelocity;
   function render() {
     if (firefoxSprite.x + firefoxSprite.image.naturalWidth >= canvasNode.width || firefoxSprite.x < 0) {
-      firefoxXVelocity *= -1;
+      firefoxXDelta *= -1;
     }
     if (firefoxSprite.y + firefoxSprite.image.naturalHeight >= canvasNode.height || firefoxSprite.y < 0) {
-      firefoxYVelocity *= -1;
+      firefoxYDelta *= -1;
     }
-    firefoxSprite.x += firefoxXVelocity;
-    firefoxSprite.y += firefoxYVelocity;
+    firefoxSprite.x += firefoxXDelta;
+    firefoxSprite.y += firefoxYDelta;
     renderer.render(firefoxSprite);
   }
   function tick() {
