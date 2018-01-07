@@ -21,6 +21,8 @@ async function main() {
   const image = await loadImage(imageUrl);
   /** @type {HTMLCanvasElement} */
   const canvasNode = document.querySelector(`.gameCanvas`);
+  /** @type {HTMLDivElement} */
+  const fpsNode = document.querySelector(`.fpsCounter`);
   const renderer = new Renderer(canvasNode);
   const firefoxSprite = new Container();
   firefoxSprite.image = image;
@@ -39,7 +41,15 @@ async function main() {
     firefoxSprite.y += firefoxYDelta;
     renderer.render(firefoxSprite);
   }
+  const frameTimestamps = [];
   function tick() {
+    const currentTimestamp = Date.now().valueOf();
+    const firstIndexWithinOneSecond = frameTimestamps.findIndex(timestamp => currentTimestamp - timestamp <= 1000);
+    if (firstIndexWithinOneSecond !== -1) {
+      frameTimestamps.splice(0, firstIndexWithinOneSecond);
+      fpsNode.innerText = `FPS: ${frameTimestamps.length}`;
+    }
+    frameTimestamps.push(currentTimestamp);
     render();
     requestAnimationFrame(() => tick());
   }
