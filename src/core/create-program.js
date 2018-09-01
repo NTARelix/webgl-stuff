@@ -6,15 +6,15 @@
  * @returns {WebGLProgram}
  */
 export default function(gl, vertexShader, fragmentShader) {
-  const program = gl.createProgram();
-  gl.attachShader(program, vertexShader);
-  gl.attachShader(program, fragmentShader);
-  gl.linkProgram(program);
-  const wasLinkSuccessful = gl.getProgramParameter(program, gl.LINK_STATUS);
+  const program = gl.createProgram()
+  gl.attachShader(program, vertexShader)
+  gl.attachShader(program, fragmentShader)
+  gl.linkProgram(program)
+  const wasLinkSuccessful = gl.getProgramParameter(program, gl.LINK_STATUS)
   if (!wasLinkSuccessful) {
-    const programLinkError = gl.getProgramInfoLog(program);
-    gl.deleteProgram(program);
-    throw new Error(`Failed to link shader program: ${programLinkError}`);
+    const programLinkError = gl.getProgramInfoLog(program)
+    gl.deleteProgram(program)
+    throw new Error(`Failed to link shader program: ${programLinkError}`)
   }
-  return program;
+  return program
 }

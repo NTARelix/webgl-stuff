@@ -1,5 +1,5 @@
-const paths = require('./paths');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const paths = require('./paths')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: paths.entry,
@@ -21,10 +21,10 @@ module.exports = {
         use: {
           loader: 'file-loader',
           options: {
-            name: '[path][name].[ext]'
-          }
-        }
-      }
+            name: '[path][name].[ext]',
+          },
+        },
+      },
     ],
   },
   devtool: 'inline-source-map',
@@ -36,4 +36,4 @@ module.exports = {
       template: paths.demoHtml,
     }),
   ],
-};
+}

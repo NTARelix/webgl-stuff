@@ -7,4 +7,4 @@ export default `
     gl_Position = vec4((u_transform * vec3(a_position, 1)).xy, 0, 1);
     v_textureCoordinates = a_textureCoordinates;
   }
-`;
+`
