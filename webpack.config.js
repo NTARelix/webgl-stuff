@@ -1,39 +1,45 @@
-const paths = require('./paths')
+const { resolve } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-module.exports = {
-  entry: paths.entry,
-  output: {
-    path: paths.dist,
-    filename: '[name].js',
-    publicPath: '/',
+module.exports = (env, { mode }) => ({
+  devServer: {
+    contentBase: false,
   },
+  devtool: mode === 'production' ? 'source-map' : 'inline-source-map',
   module: {
     rules: [
       {
         test: /\.js$/,
-        include: paths.src,
+        include: resolve(__dirname, 'src'),
         use: 'babel-loader',
       },
       {
         test: /\.(png)$/,
-        include: paths.src,
+        include: resolve(__dirname, 'src'),
         use: {
           loader: 'file-loader',
           options: {
-            name: '[path][name].[ext]',
+            name: mode === 'production' ? '[hash].[ext]' : '[path][name].[ext]',
           },
         },
       },
     ],
   },
-  devtool: 'inline-source-map',
-  devServer: {
-    contentBase: false,
+  output: {
+    chunkFilename: mode === 'production' ? '[chunkhash].js' : '[name].js',
+    filename: mode === 'production' ? '[chunkhash].js' : '[name].js',
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: paths.demoHtml,
+      minify:
+        mode !== 'production'
+          ? false
+          : {
+              collapseWhitespace: true,
+              removeAttributeQuotes: true,
+              removeScriptTypeAttributes: true,
+            },
+      template: resolve(__dirname, 'src/index.html'),
     }),
   ],
-}
+})

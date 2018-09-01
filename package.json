@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack --mode production",
     "precommit": "lint-staged",
     "start": "webpack-dev-server --hot --progress --mode development"
   },
