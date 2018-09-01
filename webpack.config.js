@@ -1,5 +1,6 @@
-const { resolve } = require('path')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { resolve } = require('path')
 
 module.exports = (env, { mode }) => ({
   devServer: {
@@ -30,6 +31,7 @@ module.exports = (env, { mode }) => ({
     filename: mode === 'production' ? '[chunkhash].js' : '[name].js',
   },
   plugins: [
+    mode === 'production' && new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       minify:
         mode !== 'production'
@@ -41,5 +43,5 @@ module.exports = (env, { mode }) => ({
             },
       template: resolve(__dirname, 'src/index.html'),
     }),
-  ],
+  ].filter(Boolean),
 })
