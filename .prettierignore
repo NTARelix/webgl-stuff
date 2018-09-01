@@ -1,0 +1,3 @@
+# Let NPM handle package file formatting
+package.json
+package-lock.json
